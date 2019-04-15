@@ -32,9 +32,9 @@ add_library (argon2-shared SHARED ${ARGON2_SRC})
 
 target_compile_definitions(argon2-shared
     PUBLIC "A2_VISCTL")
-
+message("argon2 / src / CMAKE_CURRENT_SOURCE_DIR: '${CMAKE_CURRENT_SOURCE_DIR}'")
 target_include_directories(argon2-shared
-    PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>)
 
