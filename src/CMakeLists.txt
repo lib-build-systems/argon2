@@ -10,20 +10,20 @@ set (ARGON2_SRC
     "encoding.c"
     )
 
-message(STATUS "Checking support for hardware optimization:")
-try_compile(WITH_OPTIMIZATIONS
-    ${CMAKE_CURRENT_BINARY_DIR}/optimization
-    ${CMAKE_CURRENT_SOURCE_DIR}/optimization
-    check_cpu_features
-    OUTPUT_VARIABLE OUTPUT_TEST_SUPPORT_OPTIMIZATION)
-message(STATUS "${OUTPUT_TEST_SUPPORT_OPTIMIZATION}")
+#message(STATUS "Checking support for hardware optimization:")
+#try_compile(WITH_OPTIMIZATIONS
+#    ${CMAKE_CURRENT_BINARY_DIR}/optimization
+#    ${CMAKE_CURRENT_SOURCE_DIR}/optimization
+#    check_cpu_features
+#    OUTPUT_VARIABLE OUTPUT_TEST_SUPPORT_OPTIMIZATION)
+#message(STATUS "${OUTPUT_TEST_SUPPORT_OPTIMIZATION}")
 
-message(STATUS "Build with hardware optimization? ${WITH_OPTIMIZATIONS}")
-if (WITH_OPTIMIZATIONS)
-    list(APPEND ARGON2_SRC "opt.c")
-else()
+#message(STATUS "Build with hardware optimization? ${WITH_OPTIMIZATIONS}")
+#if (WITH_OPTIMIZATIONS)
+#    list(APPEND ARGON2_SRC "opt.c")
+#else()
     list(APPEND ARGON2_SRC "ref.c")
-endif()
+#endif()
 
 ##########
 # SHARED #
