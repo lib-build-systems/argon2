@@ -31,11 +31,13 @@ set (ARGON2_SRC
 add_library (argon2-shared SHARED ${ARGON2_SRC})
 
 target_compile_definitions(argon2-shared
-    PUBLIC "A2_VISCTL")
+                            PUBLIC "A2_VISCTL")
 target_include_directories(argon2-shared
-    PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-    PRIVATE $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:include>)
+                            PUBLIC
+                                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+                            PRIVATE
+                                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+                                $<INSTALL_INTERFACE:include>)
 
 if (MULTITHREADS)
     target_link_libraries(argon2-shared PUBLIC Threads::Threads)
@@ -58,13 +60,13 @@ else()
 endif()
 
 install(TARGETS argon2-shared
-        EXPORT argon2
+        EXPORT argon2-targets
         ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR}
         )
 
-install(EXPORT argon2
+install(EXPORT argon2-targets
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/argon2
         )
 
@@ -85,7 +87,7 @@ endif()
 add_library (argon2-static STATIC ${ARGON2_SRC})
 
 target_compile_definitions(argon2-static
-    PUBLIC "A2_VISCTL")
+                           PUBLIC "A2_VISCTL")
 
 if (MULTITHREADS)
     target_link_libraries(argon2-static PUBLIC Threads::Threads)
@@ -96,7 +98,8 @@ endif()
 target_include_directories(argon2-static
                                 PUBLIC
                                     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-                                PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                                PRIVATE
+                                    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                     $<INSTALL_INTERFACE:include>)
 
 if (UNIX)
@@ -125,7 +128,8 @@ if (UNIX)
     endif()
 
     configure_file ("${CMAKE_SOURCE_DIR}/cmake/argon2.pc.in" "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc" @ONLY)
-    install (FILES "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc" DESTINATION "${PKGCONFIG_INSTALL_DIR}")
+    install (FILES "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc"
+             DESTINATION "${PKGCONFIG_INSTALL_DIR}")
 endif()
 
 ######################################################
