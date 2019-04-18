@@ -10,29 +10,29 @@ set (ARGON2_SRC
     "encoding.c"
     )
 
-#message(STATUS "Checking support for hardware optimization:")
-#try_compile(WITH_OPTIMIZATIONS
-#    ${CMAKE_CURRENT_BINARY_DIR}/optimization
-#    ${CMAKE_CURRENT_SOURCE_DIR}/optimization
-#    check_cpu_features
-#    OUTPUT_VARIABLE OUTPUT_TEST_SUPPORT_OPTIMIZATION)
-#message(STATUS "${OUTPUT_TEST_SUPPORT_OPTIMIZATION}")
+message(STATUS "Checking support for hardware optimization:")
+try_compile(WITH_OPTIMIZATIONS
+    ${CMAKE_CURRENT_BINARY_DIR}/optimization
+    ${CMAKE_SOURCE_DIR}/optimization
+    check_cpu_features
+    OUTPUT_VARIABLE OUTPUT_TEST_SUPPORT_OPTIMIZATION)
+message(STATUS "${OUTPUT_TEST_SUPPORT_OPTIMIZATION}")
 
-#message(STATUS "Build with hardware optimization? ${WITH_OPTIMIZATIONS}")
-#if (WITH_OPTIMIZATIONS)
-#    list(APPEND ARGON2_SRC "opt.c")
-#else()
+message(STATUS "Build with hardware optimization? ${WITH_OPTIMIZATIONS}")
+if (WITH_OPTIMIZATIONS)
+    list(APPEND ARGON2_SRC "opt.c")
+else()
     list(APPEND ARGON2_SRC "ref.c")
-#endif()
+endif()
 
 ##########
 # SHARED #
 ##########
-add_library (argon2-shared SHARED ${ARGON2_SRC})
+add_library (argon2 SHARED ${ARGON2_SRC})
 
-target_compile_definitions(argon2-shared
+target_compile_definitions(argon2
                             PUBLIC "A2_VISCTL")
-target_include_directories(argon2-shared
+target_include_directories(argon2
                             PUBLIC
                                 $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
                             PRIVATE
@@ -40,26 +40,26 @@ target_include_directories(argon2-shared
                                 $<INSTALL_INTERFACE:include>)
 
 if (MULTITHREADS)
-    target_link_libraries(argon2-shared PUBLIC Threads::Threads)
+    target_link_libraries(argon2 PUBLIC Threads::Threads)
 else()
-    target_compile_definitions(argon2-shared PRIVATE "ARGON2_NO_THREADS=1")
+    target_compile_definitions(argon2 PRIVATE "ARGON2_NO_THREADS=1")
 endif()
 
 if (WIN32 OR MINGW)
-    set_target_properties(argon2-shared PROPERTIES
+    set_target_properties(argon2 PROPERTIES
         C_STANDARD 90
         OUTPUT_NAME "argon2"
         PDB_OUTPUT_NAME "argon2"
         SUFFIX ".dll")
 else()
-    set_target_properties(argon2-shared PROPERTIES
+    set_target_properties(argon2 PROPERTIES
         C_STANDARD 90
         OUTPUT_NAME "argon2"
         PDB_OUTPUT_NAME "argon2"
         SUFFIX ".so.${ABI_VERSION}")
 endif()
 
-install(TARGETS argon2-shared
+install(TARGETS argon2
         EXPORT argon2-targets
         ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
