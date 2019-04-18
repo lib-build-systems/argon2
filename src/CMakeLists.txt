@@ -67,6 +67,7 @@ install(TARGETS argon2
         )
 
 install(EXPORT argon2-targets
+        NAMESPACE argon2::
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/argon2
         )
 
