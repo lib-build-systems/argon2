@@ -11,9 +11,12 @@ set (ARGON2_SRC
     )
 
 message(STATUS "Checking support for hardware optimization:")
+message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
+message(STATUS "CMAKE_CURRENT_LIST_DIR: ${CMAKE_CURRENT_LIST_DIR}")
+message(STATUS "CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
 try_compile(WITH_OPTIMIZATIONS
     ${CMAKE_CURRENT_BINARY_DIR}/optimization
-    ${CMAKE_SOURCE_DIR}/optimization
+    ${CMAKE_CURRENT_LIST_DIR}/optimization
     check_cpu_features
     OUTPUT_VARIABLE OUTPUT_TEST_SUPPORT_OPTIMIZATION)
 message(STATUS "${OUTPUT_TEST_SUPPORT_OPTIMIZATION}")
