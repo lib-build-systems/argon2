@@ -67,11 +67,11 @@ message(STATUS "CMAKE_INSTALL_BINDIR: ${CMAKE_INSTALL_BINDIR}")
 add_subdirectory(src)
 #add_subdirectory(tool)
 
-if (UNIX)
-    add_subdirectory(man)
-endif()
-
 if (SPECS)
+    if (UNIX)
+        add_subdirectory(man)
+    endif()
+
     add_subdirectory(latex)
 else()
     message(STATUS "Skipping latex documentation")
