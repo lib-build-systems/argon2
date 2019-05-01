@@ -34,9 +34,9 @@ target_compile_definitions(argon2
                             PUBLIC "A2_VISCTL")
 target_include_directories(argon2
                             PUBLIC
-                                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+                                $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                             PRIVATE
-                                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+                                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                 $<INSTALL_INTERFACE:include>)
 
 if (MULTITHREADS)
@@ -98,7 +98,7 @@ endif()
 
 target_include_directories(argon2-static
                                 PUBLIC
-                                    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+                                    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                                 PRIVATE
                                     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                     $<INSTALL_INTERFACE:include>)
@@ -128,7 +128,7 @@ if (UNIX)
         set(CPACK_PACKAGE_LINKFLAGS "-pthread")
     endif()
 
-    configure_file ("${CMAKE_SOURCE_DIR}/cmake/argon2.pc.in" "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc" @ONLY)
+    configure_file ("${PROJECT_SOURCE_DIR}/cmake/argon2.pc.in" "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc" @ONLY)
     install (FILES "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc"
              DESTINATION "${PKGCONFIG_INSTALL_DIR}")
 endif()
@@ -146,7 +146,7 @@ endif()
 
 target_include_directories(argon2-static-genkat PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
 
 target_compile_definitions(argon2-static-genkat
     PUBLIC "A2_VISCTL" "GENKAT")
