@@ -61,14 +61,14 @@ endif()
 
 install(TARGETS argon2
         EXPORT argon2-targets
-        ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         )
 
 install(EXPORT argon2-targets
         NAMESPACE argon2::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/argon2
+        DESTINATION lib/cmake/argon2
         )
 
 if (UNIX)
@@ -123,7 +123,7 @@ install(FILES "${CMAKE_SOURCE_DIR}/include/argon2.h"
 
 if (UNIX)
     set (CPACK_PACKAGE_NAME argon2)
-    set (PKGCONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/argon2")
+    set (PKGCONFIG_INSTALL_DIR lib/cmake/argon2)
     if (MULTITHREADS)
         set(CPACK_PACKAGE_LINKFLAGS "-pthread")
     endif()
