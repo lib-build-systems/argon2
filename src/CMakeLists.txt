@@ -31,7 +31,7 @@ endif()
 add_library (argon2 SHARED ${ARGON2_SRC})
 
 if (UNIX)
-    target_compile_definitions(argon2 PUBLIC "A2_VISCTL")
+    target_compile_definitions(argon2 PRIVATE "A2_VISCTL")
 endif ()
 
 target_include_directories(argon2
@@ -42,7 +42,7 @@ target_include_directories(argon2
                                 $<INSTALL_INTERFACE:include>)
 
 if (MULTITHREADS)
-    target_link_libraries(argon2 PUBLIC Threads::Threads)
+    target_link_libraries(argon2 PRIVATE Threads::Threads)
 else()
     target_compile_definitions(argon2 PRIVATE "ARGON2_NO_THREADS=1")
 endif()
@@ -90,11 +90,11 @@ endif()
 add_library (argon2-static STATIC ${ARGON2_SRC})
 
 if (UNIX)
-    target_compile_definitions(argon2-static PUBLIC "A2_VISCTL")
+    target_compile_definitions(argon2-static PRIVATE "A2_VISCTL")
 endif ()
 
 if (MULTITHREADS)
-    target_link_libraries(argon2-static PUBLIC Threads::Threads)
+    target_link_libraries(argon2-static PRIVATE Threads::Threads)
 else()
     target_compile_definitions(argon2-static PRIVATE "ARGON2_NO_THREADS=1")
 endif()
@@ -142,7 +142,7 @@ endif()
 add_library (argon2-static-genkat STATIC ${ARGON2_SRC})
 
 if (MULTITHREADS)
-    target_link_libraries(argon2-static-genkat PUBLIC Threads::Threads)
+    target_link_libraries(argon2-static-genkat PRIVATE Threads::Threads)
 else()
     target_compile_definitions(argon2-static-genkat PRIVATE "ARGON2_NO_THREADS=1")
 endif()
@@ -151,9 +151,9 @@ target_include_directories(argon2-static-genkat PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
 
-target_compile_definitions(argon2-static-genkat PUBLIC "GENKAT")
+target_compile_definitions(argon2-static-genkat PRIVATE "GENKAT")
 if (UNIX)
-    target_compile_definitions(argon2-static-genkat PUBLIC "A2_VISCTL")
+    target_compile_definitions(argon2-static-genkat PRIVATE "A2_VISCTL")
 endif ()
 
 set_target_properties(argon2-static-genkat PROPERTIES
