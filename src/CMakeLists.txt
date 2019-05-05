@@ -126,7 +126,7 @@ install(FILES "${CMAKE_SOURCE_DIR}/include/argon2.h"
 
 if (UNIX)
     set (CPACK_PACKAGE_NAME argon2)
-    set (PKGCONFIG_INSTALL_DIR lib/cmake/argon2)
+    #set (PKGCONFIG_INSTALL_DIR lib/cmake/argon2)
     if (MULTITHREADS)
         set(CPACK_PACKAGE_LINKFLAGS "-pthread")
     endif()
