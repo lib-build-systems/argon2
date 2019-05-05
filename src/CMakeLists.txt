@@ -68,7 +68,7 @@ install(TARGETS argon2
 
 install(EXPORT argon2-targets
         NAMESPACE argon2::
-        DESTINATION lib/cmake/argon2
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/argon2
         )
 
 if (UNIX)
@@ -130,7 +130,7 @@ if (UNIX)
 
     configure_file ("${PROJECT_SOURCE_DIR}/cmake/argon2.pc.in" "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc" @ONLY)
     install (FILES "${PROJECT_BINARY_DIR}/lib${CPACK_PACKAGE_NAME}.pc"
-             DESTINATION "${PKGCONFIG_INSTALL_DIR}")
+             DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/argon2")
 endif()
 
 ######################################################
