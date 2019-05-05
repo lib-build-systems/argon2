@@ -30,8 +30,10 @@ endif()
 ##########
 add_library (argon2 SHARED ${ARGON2_SRC})
 
-target_compile_definitions(argon2
-                            PUBLIC "A2_VISCTL")
+if (UNIX)
+    target_compile_definitions(argon2 PUBLIC "A2_VISCTL")
+endif ()
+
 target_include_directories(argon2
                             PUBLIC
                                 $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
@@ -87,8 +89,9 @@ endif()
 ##########
 add_library (argon2-static STATIC ${ARGON2_SRC})
 
-target_compile_definitions(argon2-static
-                           PUBLIC "A2_VISCTL")
+if (UNIX)
+    target_compile_definitions(argon2-static PUBLIC "A2_VISCTL")
+endif ()
 
 if (MULTITHREADS)
     target_link_libraries(argon2-static PUBLIC Threads::Threads)
@@ -148,8 +151,10 @@ target_include_directories(argon2-static-genkat PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
 
-target_compile_definitions(argon2-static-genkat
-    PUBLIC "A2_VISCTL" "GENKAT")
+target_compile_definitions(argon2-static-genkat PUBLIC "GENKAT")
+if (UNIX)
+    target_compile_definitions(argon2-static-genkat PUBLIC "A2_VISCTL")
+endif ()
 
 set_target_properties(argon2-static-genkat PROPERTIES
     C_STANDARD 90
