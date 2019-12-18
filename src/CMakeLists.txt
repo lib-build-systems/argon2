@@ -47,6 +47,9 @@ else()
     target_compile_definitions(argon2 PRIVATE "ARGON2_NO_THREADS=1")
 endif()
 
+set_target_properties(argon2 PROPERTIES
+    C_STANDARD 90)
+    
 if (UNIX)
     set_target_properties(argon2 PROPERTIES
         VERSION ${ARGON2_VERSION}
