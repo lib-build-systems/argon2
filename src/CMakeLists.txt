@@ -47,18 +47,10 @@ else()
     target_compile_definitions(argon2 PRIVATE "ARGON2_NO_THREADS=1")
 endif()
 
-if (WIN32 OR MINGW)
+if (UNIX)
     set_target_properties(argon2 PROPERTIES
-        C_STANDARD 90
-        OUTPUT_NAME "argon2"
-        PDB_OUTPUT_NAME "argon2"
-        SUFFIX ".dll")
-else()
-    set_target_properties(argon2 PROPERTIES
-        C_STANDARD 90
-        OUTPUT_NAME "argon2"
-        PDB_OUTPUT_NAME "argon2"
-        SUFFIX ".so.${ABI_VERSION}")
+        VERSION ${ARGON2_VERSION}
+        SOVERSION ${ABI_VERSION})
 endif()
 
 install(TARGETS argon2
@@ -73,16 +65,16 @@ install(EXPORT argon2-targets
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/argon2
         )
 
-if (UNIX)
-    macro(install_symlink filepath sympath)
-        install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${filepath} ${sympath} \
-                                      WORKING_DIRECTORY ${CMAKE_INSTALL_LIBDIR})")
-        install(CODE "message(\"-- Created symlink: ${sympath} -> ${filepath}\")")
-    endmacro(install_symlink)
-
-    install_symlink(${CMAKE_SHARED_LIBRARY_PREFIX}argon2${CMAKE_SHARED_LIBRARY_SUFFIX}.${ABI_VERSION}
-                    ${CMAKE_SHARED_LIBRARY_PREFIX}argon2${CMAKE_SHARED_LIBRARY_SUFFIX})
-endif()
+#if (UNIX)
+#    macro(install_symlink filepath sympath)
+#        install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${filepath} ${sympath} \
+#                                      WORKING_DIRECTORY ${CMAKE_INSTALL_LIBDIR})")
+#        install(CODE "message(\"-- Created symlink: ${sympath} -> ${filepath}\")")
+#    endmacro(install_symlink)
+#
+#    install_symlink(${CMAKE_SHARED_LIBRARY_PREFIX}argon2${CMAKE_SHARED_LIBRARY_SUFFIX}.${ABI_VERSION}
+#                    ${CMAKE_SHARED_LIBRARY_PREFIX}argon2${CMAKE_SHARED_LIBRARY_SUFFIX})
+#endif()
 
 ##########
 # STATIC #
@@ -159,4 +151,3 @@ endif ()
 set_target_properties(argon2-static-genkat PROPERTIES
     C_STANDARD 90
     OUTPUT_NAME "argon2-genkat")
-
